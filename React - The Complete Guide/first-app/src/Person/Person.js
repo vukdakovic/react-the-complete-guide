@@ -4,7 +4,7 @@ class Person extends Component {
   render() {
     return (
       <div>
-        <p>I'm {this.props.name} I'm {this.props.age} years old. {this.props.children}</p>
+        <p onClick={this.props.click}>I'm {this.props.name} I'm {this.props.age} years old. {this.props.children}</p>
       </div>
     );
   }
