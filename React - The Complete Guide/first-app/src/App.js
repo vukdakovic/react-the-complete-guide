@@ -1,22 +1,68 @@
-import React, {Component} from 'react';
+import React, { Component, useState } from 'react';
 import './App.css';
 import Person from './Person/Person';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <h1>Hello</h1>
-        <p>This is a paragraph.</p>
-        <Person name="Vuk" age="27"/>
-        <Person name="Vuki" age="28">This is a message</Person>
-        <Person name="Vukoslav" age="26" />
-      </div>
-    );
-    // return React.createElement('div', null, 'h1', 'Naslov')    Ne moze ovako, jer i h1 on cita kao tekst i spaja ih jedan na drugi, tako da mora drugacije
-    // return React.createElement('div', null, React.createElement('h1', null, "Naslov sad"))   Ovo ce raditi sad, ali nece se primeniti na njega stil
-    // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, "Naslov sad"))   Ovako ce se i stil primeniti, ali treba izbegavati ovo jer ce se samo gomilati, treba ono prvo
-  }
+// class App extends Component {
+//   state = {
+//     persons: [
+//       {name: "Vuk", age: 20},
+//       {name: "Vuki", age: 28},
+//       {name: "Vukoslav", age: 26}
+//     ],
+//     otherState: "some other value"
+//   }
+//
+//   switchNameHandler = () => {
+//     this.setState({persons: [
+//       {name: "Miki", age: 20},
+//       {name: "Vuki", age: 28},
+//       {name: "Vukoslav", age: 26}
+//     ]})
+//   }
+//
+//   render() {
+//     return (
+//       <div className="App">
+//         <h1>Hello</h1>
+//         <p>This is a paragraph.</p>
+//         <button onClick={this.switchNameHandler}>Switch name</button>
+//         <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
+//         <Person name={this.state.persons[1].name} age={this.state.persons[1].age} />
+//         <Person name={this.state.persons[2].name} age={this.state.persons[2].age} />
+//       </div>
+//     );
+//  )
+// }
+
+const App = () => {
+  const [ personsState, setPersonsState ] = useState({
+    persons: [
+        { name: 'Vuk', age: 20 },
+        { name: 'Vuki', age: 28 },
+        { name: 'Vukoslav', age: 26 }
+      ]
+  });
+
+  const [ otherState, setOtherState ] = useState('Some other value');
+
+  const switchNameHandler = () => {
+    setPersonsState ({persons: [
+        { name: 'Vuk', age: 35 },
+        { name: 'Vuki', age: 28 },
+        { name: 'Vukoslav', age: 26 }
+      ]
+    })
+}
+  return (
+    <div className="App">
+      <h1>Hello</h1>
+      <p>This is a paragraph.</p>
+      <button onClick={switchNameHandler}>Switch name</button>
+      <Person name={personsState.persons[0].name} age={personsState.persons[0].age} />
+      <Person name={personsState.persons[1].name} age={personsState.persons[1].age} />
+      <Person name={personsState.persons[2].name} age={personsState.persons[2].age} />
+    </div>
+    )
 }
 
 export default App;
