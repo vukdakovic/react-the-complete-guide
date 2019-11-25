@@ -35,6 +35,14 @@ import Person from './Person/Person';
 // }
 
 const App = () => {
+  const style = {
+    backgroundColor: "white",
+    font: "inherit",
+    border: "1px solid blue",
+    padding: "8px",
+    cursor: "pointer"
+  }
+
   const [ personsState, setPersonsState ] = useState({
     persons: [
         { name: 'Vuk', age: 20 },
@@ -52,14 +60,24 @@ const App = () => {
         { name: 'Vukoslav', age: 26 }
       ]
     })
-}
+  }
+
+  const changeNameHandler = (event) => {
+    setPersonsState ({persons: [
+        { name: "Vuk", age: 35 },
+        { name: event.target.value, age: 28 },
+        { name: 'Vukoslav', age: 26 }
+      ]
+    })
+  }
+
   return (
     <div className="App">
       <h1>Hello</h1>
       <p>This is a paragraph.</p>
-      <button onClick={() => switchNameHandler("Vucina")}>Switch name</button>
+      <button style={style} onClick={() => switchNameHandler("Vucina")}>Switch name</button>
       <Person name={personsState.persons[0].name} age={personsState.persons[0].age} />
-      <Person name={personsState.persons[1].name} age={personsState.persons[1].age} click={switchNameHandler.bind(this, "Vucic")}/>
+      <Person changed={changeNameHandler} name={personsState.persons[1].name} age={personsState.persons[1].age} click={switchNameHandler.bind(this, "Vucic")}/>
       <Person name={personsState.persons[2].name} age={personsState.persons[2].age} />
     </div>
     )
