@@ -1,8 +1,6 @@
 import React, { Component, useState } from 'react';
 import './App.css';
 import Person from './Person/Person';
-import UserInput from './UserInput/UserInput';
-import UserOutput from './UserOutput/UserOutput';
 
 // class App extends Component {
 //   state = {
@@ -46,20 +44,18 @@ const App = () => {
   }
 
   const [ personsState, setPersonsState ] = useState({
-    persons: [
+    persons:
+      [
         { name: 'Vuk', age: 20, id: 1 },
         { name: 'Vuki', age: 28, id: 2 },
         { name: 'Vukoslav', age: 26, id: 3 }
       ]
-  });
+    }
+  );
 
   const [ otherState, setOtherState ] = useState('Some other value');
 
   const [ showPersonsState, setShowPersonsState ] = useState(false);
-
-  const [ usernameState, setUsernameState] = useState({
-    usernames: ["First", "Second", "Third"]
-  })
 
   const switchNameHandler = (newName) => {
     setPersonsState ({persons: [
@@ -70,6 +66,27 @@ const App = () => {
     })
   }
 
+  const changeNameHandler = (event, id) => {
+    // const personIndex = personsState.persons.findIndex( p => {
+    //   return p.id === id;
+    // })
+    // const person = {
+    //   ...this.state.persons[personIndex]
+    // };
+    // person.name = event.target.value;
+    // const persons = [...personsState.persons];
+    // persons[personIndex] = person;
+    // setPersonsState({persons: persons})
+
+    const newPersonsState = [...personsState.persons];
+    newPersonsState.map(person => {
+      if (person.id === id) {
+        person.name = event.target.value;
+      }
+    })
+    setPersonsState({persons: newPersonsState})
+  }
+
   const deletePersonHandler = (index) => {
     // const newPersons = personsState.persons.slice();
     const newPersons = [...personsState.persons];
@@ -77,15 +94,9 @@ const App = () => {
     setPersonsState({persons: newPersons})
   }
 
-  const manipulateUsernameHandler = (event) => {
-    setUsernameState ({
-      usernames: [event.target.value, "Second", "Third"]
-    })
-  }
-
   const togglePersonsHandler = () => {
     const doesShow = showPersonsState;
-    setShowPersonsState (!doesShow)
+    setShowPersonsState (!doesShow);
   }
 
   let persons = null;
@@ -96,24 +107,21 @@ const App = () => {
         {
           personsState.persons.map((person, index) => {
             return (
-              <Person click={() => {deletePersonHandler(index)}} name={person.name} age={person.age} key={person.id} />
-          )})
+              <Person changed={(event) => {changeNameHandler(event, person.id)}} click={() => {deletePersonHandler(index)}} name={person.name} age={person.age} key={person.id} />
+            )
+          })
         }
       </div>
     )
   }
-
+  
   return (
     <div className="App">
       <h1>Hello</h1>
       <p>This is a paragraph.</p>
-      <button style={style} onClick={() => switchNameHandler("Vucina")}>Switch name</button>
+      <button style={style} onClick={() => switchNameHandler("Vucina")}>Switch name</button> <br/><br/>
       <button onClick={togglePersonsHandler}>Show Persons</button>
       {persons}
-      <UserInput name={usernameState.usernames[0]} changed={manipulateUsernameHandler} />
-      <UserOutput name={usernameState.usernames[0]}/>
-      <UserOutput name={usernameState.usernames[1]}/>
-      <UserOutput name={usernameState.usernames[2]}/>
     </div>
     )
 }
